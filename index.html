@@ -14,68 +14,61 @@
 
     body {
       font-family: Arial, sans-serif;
-      background: linear-gradient(to bottom right, #4facfe, #00f2fe);
+      background: #f8f9fa;
       color: #333;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      padding: 20px;
-      height: 100vh;
+      min-height: 100vh;
     }
 
-    .container {
-      background: #fff;
-      padding: 2rem;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      width: 90%;
-      max-width: 800px;
+    header {
+      background: #007BFF;
+      color: #fff;
+      padding: 1rem;
       text-align: center;
     }
 
-    .title {
-      font-size: 2rem;
-      font-weight: bold;
-      color: #007BFF;
-      margin-bottom: 10px;
-    }
-
-    .input-container {
+    .header-container {
+      max-width: 1200px;
+      margin: 0 auto;
       display: flex;
-      justify-content: center;
-      margin-bottom: 1rem;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
     }
 
-    input {
+    .header-container input {
       padding: 0.5rem;
       width: 70%;
-      border: 1px solid #ddd;
-      border-radius: 5px 0 0 5px;
+      max-width: 600px;
+      border: none;
+      border-radius: 5px;
       outline: none;
     }
 
-    button {
+    .header-container button {
       padding: 0.5rem 1rem;
-      background: #007BFF;
+      background: #0056b3;
       color: #fff;
       border: none;
-      border-radius: 0 5px 5px 0;
+      border-radius: 5px;
       cursor: pointer;
       transition: background 0.3s;
     }
 
-    button:hover {
-      background: #0056b3;
+    .header-container button:hover {
+      background: #003f7f;
     }
 
     .buttons-container {
-      margin-bottom: 1rem;
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
     }
 
     .buttons-container button {
-      margin: 0.5rem;
       padding: 0.5rem 1rem;
-      background: #007BFF;
+      background: #0056b3;
       color: #fff;
       border: none;
       border-radius: 5px;
@@ -84,42 +77,55 @@
     }
 
     .buttons-container button:hover {
-      background: #0056b3;
+      background: #003f7f;
     }
 
     .iframe-container {
-      border: 1px solid #ddd;
-      border-radius: 10px;
+      flex-grow: 1;
       overflow: hidden;
-      width: 100%;
-      height: 60vh;
-      margin-top: 1rem;
+      position: relative;
     }
 
     iframe {
       width: 100%;
       height: 100%;
       border: none;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    footer {
+      background: #333;
+      color: #fff;
+      text-align: center;
+      padding: 0.5rem;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      font-size: 0.9rem;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1 class="title">Remove Paywall</h1>
-    <div class="input-container">
+  <header>
+    <div class="header-container">
       <input id="urlInput" type="url" placeholder="Enter a URL (e.g., https://example.com)" />
       <button id="loadBtn">Load</button>
+      <div class="buttons-container">
+        <button id="archiveBtn">Archive.is</button>
+        <button id="waybackBtn">Wayback Machine</button>
+        <button id="googleBtn">Google Cache</button>
+        <button id="bingBtn">Bing Cache</button>
+      </div>
     </div>
-    <div class="buttons-container">
-      <button id="archiveBtn">Archive.is</button>
-      <button id="waybackBtn">Wayback Machine</button>
-      <button id="googleBtn">Google Cache</button>
-      <button id="bingBtn">Bing Cache</button>
-    </div>
-    <div class="iframe-container">
-      <iframe id="iframe" src=""></iframe>
-    </div>
+  </header>
+  <div class="iframe-container">
+    <iframe id="iframe" src=""></iframe>
   </div>
+  <footer>
+    &copy; 2024 Remove Paywall | Built for simplicity and functionality
+  </footer>
   <script>
     // Function to validate URLs
     function isValidUrl(string) {
