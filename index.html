@@ -17,8 +17,9 @@
       background: linear-gradient(to bottom right, #4facfe, #00f2fe);
       color: #333;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
+      padding: 20px;
       height: 100vh;
     }
 
@@ -28,7 +29,7 @@
       border-radius: 10px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
       width: 90%;
-      max-width: 500px;
+      max-width: 800px;
       text-align: center;
     }
 
@@ -36,18 +37,13 @@
       font-size: 2rem;
       font-weight: bold;
       color: #007BFF;
-    }
-
-    .subtitle {
-      font-size: 1rem;
-      margin-bottom: 1.5rem;
-      color: #555;
+      margin-bottom: 10px;
     }
 
     .input-container {
       display: flex;
       justify-content: center;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1rem;
     }
 
     input {
@@ -72,60 +68,60 @@
       background: #0056b3;
     }
 
-    .results {
-      text-align: left;
+    .buttons-container {
+      margin-bottom: 1rem;
     }
 
-    .result-link {
-      display: block;
-      margin: 0.5rem 0;
-      color: #007BFF;
-      text-decoration: none;
-      transition: color 0.3s;
+    .buttons-container button {
+      margin: 0.5rem;
+      padding: 0.5rem 1rem;
+      background: #007BFF;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s;
     }
 
-    .result-link:hover {
-      color: #0056b3;
+    .buttons-container button:hover {
+      background: #0056b3;
+    }
+
+    .iframe-container {
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      overflow: hidden;
+      width: 100%;
+      height: 60vh;
+      margin-top: 1rem;
+    }
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
     }
   </style>
 </head>
 <body>
   <div class="container">
     <h1 class="title">Remove Paywall</h1>
-    <p class="subtitle">Find archived versions of a webpage or view it without JavaScript.</p>
     <div class="input-container">
       <input id="urlInput" type="url" placeholder="Enter a URL (e.g., https://example.com)" />
-      <button id="searchBtn">Search</button>
+      <button id="loadBtn">Load</button>
     </div>
-    <div id="results" class="results"></div>
+    <div class="buttons-container">
+      <button id="archiveBtn">Archive.is</button>
+      <button id="waybackBtn">Wayback Machine</button>
+      <button id="googleBtn">Google Cache</button>
+      <button id="bingBtn">Bing Cache</button>
+    </div>
+    <div class="iframe-container">
+      <iframe id="iframe" src=""></iframe>
+    </div>
   </div>
   <script>
-    document.getElementById('searchBtn').addEventListener('click', function () {
-      const urlInput = document.getElementById('urlInput').value.trim();
-
-      if (!urlInput || !isValidUrl(urlInput)) {
-        alert('Please enter a valid URL!');
-        return;
-      }
-
-      const archiveIsUrl = `https://archive.is/${urlInput}`;
-      const waybackMachineUrl = `https://web.archive.org/web/*/${urlInput}`;
-      const googleCacheUrl = `https://webcache.googleusercontent.com/search?q=cache:${urlInput}`;
-      const bingCacheUrl = `https://www.bing.com/search?q=cache:${urlInput}`;
-      const noJsView = `https://view-nojs.herokuapp.com/?url=${encodeURIComponent(urlInput)}`;
-
-      const resultsHtml = `
-        <h2>Results:</h2>
-        <a href="${archiveIsUrl}" target="_blank" class="result-link">Archive.is</a>
-        <a href="${waybackMachineUrl}" target="_blank" class="result-link">Wayback Machine</a>
-        <a href="${googleCacheUrl}" target="_blank" class="result-link">Google Cache</a>
-        <a href="${bingCacheUrl}" target="_blank" class="result-link">Bing Cache</a>
-        <a href="${noJsView}" target="_blank" class="result-link">View Without JavaScript</a>
-      `;
-
-      document.getElementById('results').innerHTML = resultsHtml;
-    });
-
+    // Function to validate URLs
     function isValidUrl(string) {
       try {
         new URL(string);
@@ -134,6 +130,68 @@
         return false;
       }
     }
+
+    // Event Listener for "Load" Button
+    document.getElementById("loadBtn").addEventListener("click", function () {
+      const urlInput = document.getElementById("urlInput").value.trim();
+      const iframe = document.getElementById("iframe");
+
+      if (!urlInput || !isValidUrl(urlInput)) {
+        alert("Please enter a valid URL!");
+        return;
+      }
+
+      iframe.src = urlInput; // Load URL in iframe
+    });
+
+    // Event Listeners for Source Buttons
+    document.getElementById("archiveBtn").addEventListener("click", function () {
+      const urlInput = document.getElementById("urlInput").value.trim();
+      const iframe = document.getElementById("iframe");
+
+      if (!urlInput || !isValidUrl(urlInput)) {
+        alert("Please enter a valid URL!");
+        return;
+      }
+
+      iframe.src = `https://archive.is/${urlInput}`;
+    });
+
+    document.getElementById("waybackBtn").addEventListener("click", function () {
+      const urlInput = document.getElementById("urlInput").value.trim();
+      const iframe = document.getElementById("iframe");
+
+      if (!urlInput || !isValidUrl(urlInput)) {
+        alert("Please enter a valid URL!");
+        return;
+      }
+
+      iframe.src = `https://web.archive.org/web/*/${urlInput}`;
+    });
+
+    document.getElementById("googleBtn").addEventListener("click", function () {
+      const urlInput = document.getElementById("urlInput").value.trim();
+      const iframe = document.getElementById("iframe");
+
+      if (!urlInput || !isValidUrl(urlInput)) {
+        alert("Please enter a valid URL!");
+        return;
+      }
+
+      iframe.src = `https://webcache.googleusercontent.com/search?q=cache:${urlInput}`;
+    });
+
+    document.getElementById("bingBtn").addEventListener("click", function () {
+      const urlInput = document.getElementById("urlInput").value.trim();
+      const iframe = document.getElementById("iframe");
+
+      if (!urlInput || !isValidUrl(urlInput)) {
+        alert("Please enter a valid URL!");
+        return;
+      }
+
+      iframe.src = `https://www.bing.com/search?q=cache:${urlInput}`;
+    });
   </script>
 </body>
 </html>
